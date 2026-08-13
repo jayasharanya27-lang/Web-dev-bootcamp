@@ -1,3 +1,32 @@
 h1{
     color: red;
 }
+
+.card{
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    width: 350px;
+    border-radius: 30px;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card img{
+    width: 100%;
+}
+
+.card button{
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.card button:hover{
+    background: burlywood;
+    cursor: pointer;
+}
