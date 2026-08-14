@@ -3,6 +3,7 @@ const app=express();
 const port=process.env.PORT || 8081;
 
 app.use(express.static("frontend"));
+app.use(express.json());
 
 const users=[
     {
@@ -91,6 +92,8 @@ const users=[
 
 ]
 
+var nextId=13;
+
 function findIndex(id){
     for(var i=0;i<users.length;i++){
         if(id===users[i].id){
@@ -121,6 +124,22 @@ app.get("/api/random-user",function(req,res){
     }   
     var randomIndex=Math.floor(Math.random()*users.length);
     return res.json(users[randomIndex]);    
+});
+
+app.post("/api/users",function(req,res){
+    var newUser=req.body; 
+    var tempUser = {
+        "id":nextId,
+        "name":newUser.name,
+        "gender":newUser.gender,
+        "image":newUser.image
+    };
+    nextId++;
+    users.push(tempUser);
+    return res.status(201).json({"message": "User created successfully", "user": tempUser
+
+    });
+    
 });
 
 app.listen(port,function(){
