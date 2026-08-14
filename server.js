@@ -1,6 +1,6 @@
 const express=require('express');
 const app=express();
-const port=process.env.PORT || 8081;
+const port=process.env.PORT || 8080;
 
 app.use(express.static("frontend"));
 app.use(express.json());
@@ -140,6 +140,36 @@ app.post("/api/users",function(req,res){
 
     });
     
+});
+
+app.put("/api/users/:id", function(req, res){
+    var id = Number(req.params.id);
+    var index = findIndex(id);
+    if(index === -1){
+        return res.status(404).json({"message" : "User not found with id : " + id});
+    }
+    if(req.body.name){
+        users[index].name = req.body.name;
+    }
+    if(req.body.gender){
+        users[index].gender = req.body.gender;
+    }
+    if(req.body.image){
+        users[index].image = req.body.image;
+    }
+
+    return res.json(users[index]);
+});
+
+app.delete("/api/users/:id", function(req, res){
+    var id = Number(req.params.id);
+    var index = findIndex(id);
+    if(index === -1){
+        return res.status(404).json({"message" : "User not found with id : " + id});
+    }
+    var user = users[index];
+    users.splice(index, 1);
+    return res.json({"message" : "User deleted successfully", "user" : user});
 });
 
 app.listen(port,function(){
